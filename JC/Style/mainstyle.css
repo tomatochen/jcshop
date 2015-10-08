@@ -1,0 +1,48 @@
+﻿.cover {
+position:fixed; 
+top: 0px; 
+right:0px; 
+bottom:0px;
+filter: alpha(opacity=60); 
+background-color: #777;
+z-index: 2000; 
+left: 0px; 
+display:none;
+opacity:0.5; 
+-moz-opacity:0.5;
+/*border:1px solid red;*/
+}
+
+/*高级查询样式*/ 
+.chaxunWaiDiv {
+    min-height: 45px;
+}
+
+.GJ_LBL_WenBen {
+    width: 80px;
+    text-align: right;
+}
+
+.gaojiChaXun_hide {
+    border: 0px solid #ccc;
+    padding: 6px 6px 5px 6px;
+    background-color: #fff;
+}
+
+.gaojiChaXun_show {
+    position: absolute;
+    border: 1px solid #ccc;
+    padding: 5px;
+    z-index: 1000;
+    background-color: #fff;
+}
+
+.gaojiDiv {
+    padding-top: 10px;
+}
+
+.chaxunStyle {
+    min-width: 170px;
+    height: 34px;
+}
+

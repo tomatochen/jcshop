@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/">首页</a>
+        </li>
+        <li class="active">二级分类</li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            二级品类
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                将现有菜品信息分类保存到数据库
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-responsive no-border">
+                <tbody>
+                    <tr>
+                        <td style="width: 240px; border-top: none;">
+                            <ul id="mytree" class="ztree" style="overflow:auto;"></ul>
+                        </td>
+                        <td style="border-top: none;">
+                            <form role="form" class="form-horizontal" id="validation_zidianlanmu">
+                                <div class="form-group">
+                                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">一级品类：</label>
+                                    <div class="col-sm-8">
+                                        <div class="clearfix">
+                                            <input type="hidden" name="parentID" id="parentID" value="" readonly="readonly" />
+                                            <input type="text" name="parentName" id="parentName" class="form-control" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">二级品类：</label>
+                                    <div class="col-sm-8">
+                                        <div class="clearfix">
+                                            <input type="text" name="VEGETABLESNAME" id="VEGETABLESNAME" class="form-control emp">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">排序号：</label>
+                                    <div class="col-sm-8">
+                                        <div class="clearfix">
+                                            <input type="text" name="SEQUENCE" id="SEQUENCE" class="form-control emp">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix form-actions">
+                                    <div class="col-md-offset-5 col-md-7">
+                                        <input type="hidden" name="GUID" id="GUID" class="emp">
+                                        <button type="button" class="btn btn-success btn-sm" name="btn_submitDic" onclick="submitDic(); return false;">
+                                            <i class="ace-icon fa fa-plus-circle bigger-125"></i>确定
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" id="btn_reset">
+                                            <i class="ace-icon fa fa-times bigger-125"></i>取消
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="list_dic">
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#a15').addClass("active open");
+        $('#a1502').addClass("active");
+        $('#a16').addClass("active");
+        InitializeTree();
+        $('#btn_reset').click(function () {
+            $('.emp').val('');
+        });
+    })
+    function submitDic() {
+
+        if ($('#VEGETABLESNAME').val() == "") {
+            cglalert("二级名称不允许为空！");
+            return;
+        }
+        var SEQUENCE = $('#SEQUENCE').val();
+        if (SEQUENCE != "" && !$.isNumeric(SEQUENCE)) {
+            cglalert("排序号，请输入数字！");
+            return;
+        }
+        var data = get_form_data('validation_zidianlanmu');
+        var url = '@Url.Action("Create", "VegeType")';
+        $.post(url, data, function (d) {
+            if (d.Success) {
+                cglalert(d.Message, function () {
+                    InitializeTree();
+                    load_list_dic();
+                });
+            } else {
+                cglalert(d.Message);
+            }
+        });
+    }
+    //角色树节点点击
+    function zTreeOnClick(event, treeId, treeNode) {
+        log(treeNode);
+        if (treeNode.isParent) {
+            $('#parentName').val(treeNode.name2);
+            $('#parentID').val(treeNode.id);
+            $('#VEGETABLESNAME').val('');
+            $('#SEQUENCE').val('');
+            $('#GUID').val('');
+            load_list_dic();
+        }
+
+    };
+    function load_list_dic() {
+        var pid = $('#parentID').val();
+        var url = '@Url.Action("List", "VegeType")' + "?q_pid=" + pid;
+        if (pid != "") {
+            $('#list_dic').empty().load(url);
+
+        }
+    }
+    function InitializeTree() {
+
+        var zTreeNodes;
+
+        var setting = {
+            view: {
+                selectedMulti: false
+            },
+            callback: {
+                onClick: zTreeOnClick
+            }
+        };
+
+        $.ajax({
+            //要用post方式
+            type: "get",
+            //方法所在页面和方法名
+            url: "@Url.Action("GetAll", "VegeType")",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,//同步
+            success: function (data) {
+                try {
+                    if (data.Success) {
+                        zTreeNodes = JSON.parse(data.Obj);
+
+                        zTreeObj = $.fn.zTree.init($("#mytree"), setting, zTreeNodes);
+                    } else {
+
+                    }
+                } catch (ex) {
+                    alert(ex.Message);
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+</script>

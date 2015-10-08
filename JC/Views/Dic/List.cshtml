@@ -1,0 +1,36 @@
+﻿@model IEnumerable<JC.Models.SYS_DATADIC>
+<table class="table  table-bordered">
+    <tbody>
+        <tr>
+            <th>栏目名称</th>
+            <th>名称</th>
+            <th>简称</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.DICLISTNAME</td>
+                <td>@item.DICNAME</td>
+                <td>@item.ABBRE</td>
+                <td>
+                    @*@Html.EditButton("", "func_edit_dic", item.ID)
+                    &nbsp;*@
+                    @Html.DelelteButton("", "func_delete_dic", item.GUID.ToString())
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    function func_delete_dic(id) {
+        var url = '@Url.Action("Delete", "Dic")' + "?q_id=" + id;
+        $.confirm("确定要删除选中的记录！", function () {
+            $.get(url, function (d) {
+                cglalert(d.Message, function () {
+                    load_list_dic();
+                });
+            });
+        })
+    }
+</script>

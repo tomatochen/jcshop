@@ -1,0 +1,86 @@
+﻿@model IEnumerable<JC.Models.VEGETABLESPARENTTYPE>
+
+<table class="table  table-bordered">
+    <thead>
+        <tr>
+
+            <th>
+                菜品种类
+            </th>
+            <th>
+                排序号
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.VEGETABLESNAME)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.SEQUENCE)
+            </td>
+            <td>
+                @Html.EditButton("", "func_EditXueLi", item.GUID.ToString())
+                &nbsp;
+                @Html.DelelteButton("", "func_DeleteXueLi", item.GUID.ToString())
+              
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    function func_EditXueLi(id) {
+        var url = '@Url.Action("Edit", "VegeParentType")' + "?id=" + id+"&t="+ new Date().getTime();
+
+        $.get(url, function (d) {
+            var $t = $('#validation_xueli');
+            var o = JSON.parse(d.Obj);
+            for (x in o) {
+                var $ele = $('#' + x, $t);
+                if ($ele.length > 0)
+                {
+                    var value = o[x];
+                    log(value);
+                    if ($ele.hasClass("date_month"))
+                    {
+                        if (value && value.length > 0)
+                        {
+                            value = value.substr(0, 7);
+                            $ele.val(value);
+                        }
+                    }else if($ele.hasClass("date_time"))
+                    {
+                        if (value && value.length > 0) {
+                            value = value.substr(0, 10);
+                            $ele.val(value);
+                        }
+                    }
+                    else
+                    {
+                        $ele.val(value);
+                    }
+
+                }
+            }
+        });
+    }
+
+    function func_DeleteXueLi(id) {
+
+        var url = '@Url.Action("Delete", "VegeParentType")' + "?id=" + id;
+        $.confirm("确定要删除选中的记录！", function() {
+            $.get(url, function (d) {
+                cglalert(d.Message, function () {
+                    load_list_xueli();
+                });
+            });
+        })
+
+    }
+</script>

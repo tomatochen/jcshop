@@ -1,0 +1,54 @@
+﻿@model JC.Models.STOREINFO
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>STOREINFO</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GUID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GUID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.STORENAME)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.STORENAME)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.STOREID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.STOREID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AREANAME)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AREANAME)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AREAID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AREAID)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

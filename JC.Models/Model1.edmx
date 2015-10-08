@@ -1,0 +1,896 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="jincaiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BUSINESSAREA">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AREANAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="ISDELETED" Type="int" Nullable="false" />
+          <Property Name="DELETEUSER" Type="nvarchar" MaxLength="50" />
+          <Property Name="DELETETIME" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CUSTOMERINFO">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CUSTOMERPHONE" Type="varchar" MaxLength="50" />
+          <Property Name="CUSTOMERPWD" Type="varchar" MaxLength="50" />
+          <Property Name="SHOPNAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="SHOPLEADERNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CITY" Type="nvarchar" MaxLength="50" />
+          <Property Name="ADDR" Type="nvarchar" MaxLength="200" />
+          <Property Name="INVITECODE" Type="varchar" MaxLength="50" />
+          <Property Name="BUSINESSLICENSE" Type="varchar" MaxLength="100" />
+          <Property Name="SALESMANNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="SALESMANID" Type="uniqueidentifier" />
+          <Property Name="CREATETIME" Type="datetime" />
+          <Property Name="ISDELETED" Type="int" Nullable="false" />
+          <Property Name="DELETEUSER" Type="nvarchar" MaxLength="50" />
+          <Property Name="DELETETIME" Type="datetime" />
+          <Property Name="CITYID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ORDERDETAIL">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ORDERID" Type="uniqueidentifier" />
+          <Property Name="CUSTOMERID" Type="uniqueidentifier" />
+          <Property Name="CUSTOMERNAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="VEGETABLESNAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="VEGETABLESDES" Type="nvarchar" MaxLength="300" />
+          <Property Name="BIGUNIT" Type="nvarchar" MaxLength="50" />
+          <Property Name="SMALLUNIT" Type="nvarchar" MaxLength="50" />
+          <Property Name="PACKRULE" Type="int" />
+          <Property Name="TYPEID" Type="uniqueidentifier" />
+          <Property Name="TYPENAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="BIGIMAGEURL" Type="varchar" MaxLength="200" />
+          <Property Name="SMALLIMAGEURL" Type="varchar" MaxLength="200" />
+          <Property Name="STOREID" Type="uniqueidentifier" />
+          <Property Name="STORENAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="AREAID" Type="uniqueidentifier" />
+          <Property Name="AREANAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="BIGPRICE" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="SMALLPRICE" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VEGETABLESID" Type="uniqueidentifier" />
+          <Property Name="BUYNUM" Type="int" />
+          <Property Name="TOTALCASH" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ORDERLIST">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ORDERCODE" Type="varchar" MaxLength="100" />
+          <Property Name="CUSTOMERSHOPNAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="ORDERTOTALMONEY" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="ORDERSTATUS" Type="varchar" MaxLength="50" />
+          <Property Name="ORDERTIME" Type="datetime" />
+          <Property Name="REMARK" Type="nvarchar" MaxLength="100" />
+          <Property Name="CUSTOMERID" Type="uniqueidentifier" />
+          <Property Name="STORENAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="STOREID" Type="uniqueidentifier" />
+          <Property Name="AREANAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="AREAID" Type="uniqueidentifier" />
+          <Property Name="ORDERSTATUSNAME" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="STOREINFO">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="STORENAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="STOREID" Type="uniqueidentifier" />
+          <Property Name="AREANAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="AREAID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="SYS_DATADIC">
+          <Key>
+            <PropertyRef Name="DICID" />
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="DICID" Type="int" Nullable="false" />
+          <Property Name="DICNAME" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ABBRE" Type="varchar" MaxLength="100" />
+          <Property Name="REMARK" Type="varchar" MaxLength="200" />
+          <Property Name="DICLISTNAME" Type="varchar" MaxLength="200" />
+          <Property Name="UNIQUEFLAG" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SEQUENCE" Type="int" />
+          <Property Name="IP" Type="varchar" MaxLength="50" />
+          <Property Name="USERID" Type="int" />
+          <Property Name="FULLNAME" Type="varchar" MaxLength="50" />
+          <Property Name="OPERATEDATE" Type="datetime" />
+          <Property Name="ISDELETED" Type="char" MaxLength="1" />
+          <Property Name="DELETEUSER" Type="varchar" MaxLength="50" />
+          <Property Name="DELETEDATE" Type="datetime" />
+          <Property Name="ISDISABLED" Type="char" MaxLength="1" />
+          <Property Name="DISABLEDDATE" Type="datetime" />
+          <Property Name="DISABLEDUSER" Type="varchar" MaxLength="16" />
+          <Property Name="PARENTID" Type="int" />
+          <Property Name="SUBIDS" Type="varchar" MaxLength="8000" />
+          <Property Name="SUBNAMES" Type="varchar" MaxLength="8000" />
+          <Property Name="ISDEFAULT" Type="char" MaxLength="1" />
+          <Property Name="LASTUPDATEDATE" Type="datetime" />
+          <Property Name="LASTUPDATEUSER" Type="varchar" MaxLength="50" />
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_DATADICLIST">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="DATANAME" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UNIQUEFLAG" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ISTREE" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="SEQUENCE" Type="int" Nullable="false" />
+          <Property Name="PARENTCODE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_USER">
+          <Key>
+            <PropertyRef Name="USERID" />
+          </Key>
+          <Property Name="USERID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="USERNAME" Type="varchar" MaxLength="50" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" />
+          <Property Name="FULLNAME" Type="varchar" MaxLength="50" />
+          <Property Name="SHORTNAME" Type="varchar" MaxLength="50" />
+          <Property Name="DEPTID" Type="int" />
+          <Property Name="DEPTNAME" Type="varchar" MaxLength="50" />
+          <Property Name="ALLOWLOGIN" Type="varchar" MaxLength="50" />
+          <Property Name="SEQUENCE" Type="int" />
+          <Property Name="LASTTIME" Type="datetime" />
+          <Property Name="ROLEID" Type="int" />
+          <Property Name="ROLENAME" Type="varchar" MaxLength="200" />
+          <Property Name="QQ" Type="varchar" MaxLength="50" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+          <Property Name="POSITIONID" Type="int" />
+          <Property Name="POSITIONNAME" Type="varchar" MaxLength="50" />
+          <Property Name="MOBILE" Type="varchar" MaxLength="50" />
+          <Property Name="REMARK" Type="varchar" MaxLength="100" />
+          <Property Name="IP" Type="varchar" MaxLength="50" />
+          <Property Name="OPERATORID" Type="int" />
+          <Property Name="OPERATORNAME" Type="varchar" MaxLength="50" />
+          <Property Name="OPERATEDATE" Type="datetime" />
+          <Property Name="ISDELETED" Type="int" Nullable="false" />
+          <Property Name="DELETEUSER" Type="varchar" MaxLength="50" />
+          <Property Name="DELETEDATE" Type="datetime" />
+          <Property Name="HEADLOG" Type="varchar" MaxLength="100" />
+          <Property Name="AREANAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="AREAID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="VEGETABLESINFO">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="VEGETABLESDES" Type="nvarchar" MaxLength="300" />
+          <Property Name="BIGUNIT" Type="nvarchar" MaxLength="50" />
+          <Property Name="SMALLUNIT" Type="nvarchar" MaxLength="50" />
+          <Property Name="PACKRULE" Type="int" />
+          <Property Name="TYPEID" Type="uniqueidentifier" />
+          <Property Name="TYPENAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATEUSERNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATEDATETIME" Type="datetime" />
+          <Property Name="CREATEUSERID" Type="uniqueidentifier" />
+          <Property Name="DELETEUSER" Type="nvarchar" MaxLength="50" />
+          <Property Name="DELETEDATE" Type="datetime" />
+          <Property Name="ISDELETED" Type="int" Nullable="false" />
+          <Property Name="BIGIMAGEURL" Type="varchar" MaxLength="200" />
+          <Property Name="SMALLIMAGEURL" Type="varchar" MaxLength="200" />
+          <Property Name="STOREID" Type="uniqueidentifier" />
+          <Property Name="STORENAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="BIGPRICE" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SMALLPRICE" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="STORECOUNT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ISPROMOTE" Type="int" />
+          <Property Name="PROMOTEINFO" Type="nvarchar" MaxLength="200" />
+          <Property Name="VEGETABLESID" Type="uniqueidentifier" />
+          <Property Name="AREANAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="AREAID" Type="uniqueidentifier" />
+          <Property Name="SEQUENCE" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="VEGETABLESINFOCHANGELOG">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="BIGUNIT" Type="nvarchar" MaxLength="50" />
+          <Property Name="SMALLUNIT" Type="nvarchar" MaxLength="50" />
+          <Property Name="PACKRULE" Type="int" />
+          <Property Name="TYPEID" Type="uniqueidentifier" />
+          <Property Name="TYPENAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CHANGEDATE" Type="date" Nullable="false" />
+          <Property Name="CREATEUSERNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATEDATETIME" Type="datetime" />
+          <Property Name="CREATEUSERID" Type="uniqueidentifier" />
+          <Property Name="STOREID" Type="uniqueidentifier" />
+          <Property Name="STORENAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="OLDBIGPRICE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OLDSMALLPRICE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NEWBIGPRICE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NEWSMALLPRICE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AREANAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="AREAID" Type="uniqueidentifier" />
+          <Property Name="VEGETABLESID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="VEGETABLESNAMEBASE">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="VEGETABLESDES" Type="nvarchar" MaxLength="300" />
+          <Property Name="BIGUNIT" Type="nvarchar" MaxLength="50" />
+          <Property Name="SMALLUNIT" Type="nvarchar" MaxLength="50" />
+          <Property Name="TYPEID" Type="uniqueidentifier" />
+          <Property Name="TYPENAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="BIGIMAGEURL" Type="varchar" MaxLength="200" />
+          <Property Name="SMALLIMAGEURL" Type="varchar" MaxLength="200" />
+          <Property Name="PACKRULE" Type="int" />
+          <Property Name="REMARK" Type="nvarchar" MaxLength="200" />
+          <Property Name="CREATEUSERNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATEDATETIME" Type="datetime" />
+          <Property Name="CREATEUSERID" Type="uniqueidentifier" />
+          <Property Name="ISDELETED" Type="int" Nullable="false" />
+          <Property Name="DELETEUSER" Type="nvarchar" MaxLength="50" />
+          <Property Name="DELETEDATE" Type="datetime" />
+          <Property Name="SEQUENCE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BUSINESSAREANAMES" Type="nvarchar" MaxLength="2000" />
+          <Property Name="BUSINESSAREAIDS" Type="varchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="VEGETABLESPARENTTYPE">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATEUSERNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATEDATETIME" Type="datetime" />
+          <Property Name="CREATEUSERID" Type="uniqueidentifier" />
+          <Property Name="ISDELETED" Type="int" Nullable="false" />
+          <Property Name="DELETEUSER" Type="nvarchar" MaxLength="50" />
+          <Property Name="DELETEDATE" Type="datetime" />
+          <Property Name="SEQUENCE" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="VEGETABLESTYPE">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="PARENTTYPEID" Type="uniqueidentifier" />
+          <Property Name="CREATEUSERNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATEDATETIME" Type="datetime" />
+          <Property Name="ISDELETED" Type="int" Nullable="false" />
+          <Property Name="DELETEUSER" Type="nvarchar" MaxLength="50" />
+          <Property Name="DELETEDATE" Type="datetime" />
+          <Property Name="CREATEUSERID" Type="uniqueidentifier" />
+          <Property Name="SEQUENCE" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityContainer Name="jincaiModelStoreContainer">
+          <EntitySet Name="BUSINESSAREA" EntityType="Self.BUSINESSAREA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMERINFO" EntityType="Self.CUSTOMERINFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERDETAIL" EntityType="Self.ORDERDETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERLIST" EntityType="Self.ORDERLIST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STOREINFO" EntityType="Self.STOREINFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_DATADIC" EntityType="Self.SYS_DATADIC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_DATADICLIST" EntityType="Self.SYS_DATADICLIST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_USER" EntityType="Self.SYS_USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEGETABLESINFO" EntityType="Self.VEGETABLESINFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEGETABLESINFOCHANGELOG" EntityType="Self.VEGETABLESINFOCHANGELOG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEGETABLESNAMEBASE" EntityType="Self.VEGETABLESNAMEBASE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEGETABLESPARENTTYPE" EntityType="Self.VEGETABLESPARENTTYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEGETABLESTYPE" EntityType="Self.VEGETABLESTYPE" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="jincaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ORDERDETAIL">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="ORDERID" Type="Guid" />
+          <Property Name="CUSTOMERID" Type="Guid" />
+          <Property Name="CUSTOMERNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VEGETABLESNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VEGETABLESDES" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="BIGUNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SMALLUNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PACKRULE" Type="Int32" />
+          <Property Name="TYPEID" Type="Guid" />
+          <Property Name="TYPENAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BIGIMAGEURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SMALLIMAGEURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STOREID" Type="Guid" />
+          <Property Name="STORENAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AREAID" Type="Guid" />
+          <Property Name="AREANAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BIGPRICE" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="SMALLPRICE" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VEGETABLESID" Type="Guid" />
+          <Property Name="BUYNUM" Type="Int32" />
+          <Property Name="TOTALCASH" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="STOREINFO">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="STORENAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="STOREID" Type="Guid" />
+          <Property Name="AREANAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AREAID" Type="Guid" />
+        </EntityType>
+        <EntityType Name="VEGETABLESINFO">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VEGETABLESDES" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="BIGUNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SMALLUNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PACKRULE" Type="Int32" />
+          <Property Name="TYPEID" Type="Guid" />
+          <Property Name="TYPENAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEUSERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEDATETIME" Type="DateTime" Precision="3" />
+          <Property Name="CREATEUSERID" Type="Guid" />
+          <Property Name="DELETEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DELETEDATE" Type="DateTime" Precision="3" />
+          <Property Name="ISDELETED" Type="Int32" Nullable="false" />
+          <Property Name="BIGIMAGEURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SMALLIMAGEURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STOREID" Type="Guid" />
+          <Property Name="STORENAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BIGPRICE" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SMALLPRICE" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="STORECOUNT" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ISPROMOTE" Type="Int32" />
+          <Property Name="PROMOTEINFO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VEGETABLESID" Type="Guid" />
+          <Property Name="AREANAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AREAID" Type="Guid" />
+          <Property Name="SEQUENCE" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="VEGETABLESTYPE">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PARENTTYPEID" Type="Guid" />
+          <Property Name="CREATEUSERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEDATETIME" Type="DateTime" Precision="3" />
+          <Property Name="ISDELETED" Type="Int32" Nullable="false" />
+          <Property Name="DELETEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DELETEDATE" Type="DateTime" Precision="3" />
+          <Property Name="CREATEUSERID" Type="Guid" />
+          <Property Name="SEQUENCE" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityContainer Name="jincaiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ORDERDETAIL" EntityType="Self.ORDERDETAIL" />
+          <EntitySet Name="STOREINFO" EntityType="Self.STOREINFO" />
+          <EntitySet Name="VEGETABLESINFO" EntityType="Self.VEGETABLESINFO" />
+          <EntitySet Name="VEGETABLESTYPE" EntityType="Self.VEGETABLESTYPE" />
+          <EntitySet Name="VEGETABLESPARENTTYPE" EntityType="jincaiModel.VEGETABLESPARENTTYPE" />
+          <EntitySet Name="CUSTOMERINFO" EntityType="jincaiModel.CUSTOMERINFO" />
+          <EntitySet Name="SYS_USER" EntityType="jincaiModel.SYS_USER" />
+          <EntitySet Name="SYS_DATADIC" EntityType="jincaiModel.SYS_DATADIC" />
+          <EntitySet Name="SYS_DATADICLIST" EntityType="jincaiModel.SYS_DATADICLIST" />
+          <EntitySet Name="BUSINESSAREA" EntityType="jincaiModel.BUSINESSAREA" />
+          <EntitySet Name="VEGETABLESNAMEBASE" EntityType="jincaiModel.VEGETABLESNAMEBASE" />
+          <EntitySet Name="ORDERLIST" EntityType="jincaiModel.ORDERLIST" />
+          <EntitySet Name="VEGETABLESINFOCHANGELOG" EntityType="jincaiModel.VEGETABLESINFOCHANGELOG" />
+        </EntityContainer>
+        <EntityType Name="VEGETABLESPARENTTYPE">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEUSERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEDATETIME" Type="DateTime" Precision="3" />
+          <Property Name="CREATEUSERID" Type="Guid" />
+          <Property Name="ISDELETED" Type="Int32" Nullable="false" />
+          <Property Name="DELETEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DELETEDATE" Type="DateTime" Precision="3" />
+          <Property Name="SEQUENCE" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="CUSTOMERINFO">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="CUSTOMERPHONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMERPWD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SHOPNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SHOPLEADERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ADDR" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="INVITECODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BUSINESSLICENSE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SALESMANNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SALESMANID" Type="Guid" />
+          <Property Name="CREATETIME" Type="DateTime" Precision="3" />
+          <Property Name="ISDELETED" Type="Int32" Nullable="false" />
+          <Property Name="DELETEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DELETETIME" Type="DateTime" Precision="3" />
+          <Property Name="CITYID" Type="Guid" />
+        </EntityType>
+        <EntityType Name="SYS_USER">
+          <Key>
+            <PropertyRef Name="USERID" />
+          </Key>
+          <Property Name="USERID" Type="Guid" Nullable="false" />
+          <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FULLNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SHORTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DEPTID" Type="Int32" />
+          <Property Name="DEPTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ALLOWLOGIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SEQUENCE" Type="Int32" />
+          <Property Name="LASTTIME" Type="DateTime" Precision="3" />
+          <Property Name="ROLEID" Type="Int32" />
+          <Property Name="ROLENAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="POSITIONID" Type="Int32" />
+          <Property Name="POSITIONNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MOBILE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="REMARK" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OPERATORID" Type="Int32" />
+          <Property Name="OPERATORNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OPERATEDATE" Type="DateTime" Precision="3" />
+          <Property Name="ISDELETED" Type="Int32" Nullable="false" />
+          <Property Name="DELETEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DELETEDATE" Type="DateTime" Precision="3" />
+          <Property Name="HEADLOG" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AREANAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AREAID" Type="Guid" />
+        </EntityType>
+        <EntityType Name="SYS_DATADIC">
+          <Key>
+            <PropertyRef Name="DICID" />
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="DICID" Type="Int32" Nullable="false" />
+          <Property Name="DICNAME" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ABBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="REMARK" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DICLISTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UNIQUEFLAG" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SEQUENCE" Type="Int32" />
+          <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USERID" Type="Int32" />
+          <Property Name="FULLNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OPERATEDATE" Type="DateTime" Precision="3" />
+          <Property Name="ISDELETED" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DELETEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DELETEDATE" Type="DateTime" Precision="3" />
+          <Property Name="ISDISABLED" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DISABLEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="DISABLEDUSER" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="PARENTID" Type="Int32" />
+          <Property Name="SUBIDS" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="SUBNAMES" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="ISDEFAULT" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LASTUPDATEDATE" Type="DateTime" Precision="3" />
+          <Property Name="LASTUPDATEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_DATADICLIST">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="DATANAME" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UNIQUEFLAG" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ISTREE" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="SEQUENCE" Type="Int32" Nullable="false" />
+          <Property Name="PARENTCODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BUSINESSAREA">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="AREANAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ISDELETED" Type="Int32" Nullable="false" />
+          <Property Name="DELETEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DELETETIME" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="VEGETABLESNAMEBASE">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VEGETABLESDES" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="BIGUNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SMALLUNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TYPEID" Type="Guid" />
+          <Property Name="TYPENAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BIGIMAGEURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SMALLIMAGEURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PACKRULE" Type="Int32" />
+          <Property Name="REMARK" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEUSERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEDATETIME" Type="DateTime" Precision="3" />
+          <Property Name="CREATEUSERID" Type="Guid" />
+          <Property Name="ISDELETED" Type="Int32" Nullable="false" />
+          <Property Name="DELETEUSER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DELETEDATE" Type="DateTime" Precision="3" />
+          <Property Name="SEQUENCE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BUSINESSAREANAMES" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="BUSINESSAREAIDS" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ORDERLIST">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="ORDERCODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMERSHOPNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ORDERTOTALMONEY" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="ORDERSTATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ORDERTIME" Type="DateTime" Precision="3" />
+          <Property Name="REMARK" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTOMERID" Type="Guid" />
+          <Property Name="STORENAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="STOREID" Type="Guid" />
+          <Property Name="AREANAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AREAID" Type="Guid" />
+          <Property Name="ORDERSTATUSNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VEGETABLESINFOCHANGELOG">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="VEGETABLESNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BIGUNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SMALLUNIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PACKRULE" Type="Int32" />
+          <Property Name="TYPEID" Type="Guid" />
+          <Property Name="TYPENAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEUSERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATEDATETIME" Type="DateTime" Precision="3" />
+          <Property Name="CREATEUSERID" Type="Guid" />
+          <Property Name="STOREID" Type="Guid" />
+          <Property Name="STORENAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OLDBIGPRICE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OLDSMALLPRICE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NEWBIGPRICE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NEWSMALLPRICE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AREANAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AREAID" Type="Guid" />
+          <Property Name="VEGETABLESID" Type="Guid" />
+          <Property Name="CHANGEDATE" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="jincaiModelStoreContainer" CdmEntityContainer="jincaiEntities">
+          <EntitySetMapping Name="ORDERDETAIL">
+            <EntityTypeMapping TypeName="jincaiModel.ORDERDETAIL">
+              <MappingFragment StoreEntitySet="ORDERDETAIL">
+                <ScalarProperty Name="TOTALCASH" ColumnName="TOTALCASH" />
+                <ScalarProperty Name="BUYNUM" ColumnName="BUYNUM" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="ORDERID" ColumnName="ORDERID" />
+                <ScalarProperty Name="CUSTOMERID" ColumnName="CUSTOMERID" />
+                <ScalarProperty Name="CUSTOMERNAME" ColumnName="CUSTOMERNAME" />
+                <ScalarProperty Name="VEGETABLESNAME" ColumnName="VEGETABLESNAME" />
+                <ScalarProperty Name="VEGETABLESDES" ColumnName="VEGETABLESDES" />
+                <ScalarProperty Name="BIGUNIT" ColumnName="BIGUNIT" />
+                <ScalarProperty Name="SMALLUNIT" ColumnName="SMALLUNIT" />
+                <ScalarProperty Name="PACKRULE" ColumnName="PACKRULE" />
+                <ScalarProperty Name="TYPEID" ColumnName="TYPEID" />
+                <ScalarProperty Name="TYPENAME" ColumnName="TYPENAME" />
+                <ScalarProperty Name="BIGIMAGEURL" ColumnName="BIGIMAGEURL" />
+                <ScalarProperty Name="SMALLIMAGEURL" ColumnName="SMALLIMAGEURL" />
+                <ScalarProperty Name="STOREID" ColumnName="STOREID" />
+                <ScalarProperty Name="STORENAME" ColumnName="STORENAME" />
+                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="BIGPRICE" ColumnName="BIGPRICE" />
+                <ScalarProperty Name="SMALLPRICE" ColumnName="SMALLPRICE" />
+                <ScalarProperty Name="VEGETABLESID" ColumnName="VEGETABLESID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STOREINFO">
+            <EntityTypeMapping TypeName="jincaiModel.STOREINFO">
+              <MappingFragment StoreEntitySet="STOREINFO">
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="STORENAME" ColumnName="STORENAME" />
+                <ScalarProperty Name="STOREID" ColumnName="STOREID" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEGETABLESINFO">
+            <EntityTypeMapping TypeName="jincaiModel.VEGETABLESINFO">
+              <MappingFragment StoreEntitySet="VEGETABLESINFO">
+                <ScalarProperty Name="SEQUENCE" ColumnName="SEQUENCE" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="VEGETABLESNAME" ColumnName="VEGETABLESNAME" />
+                <ScalarProperty Name="VEGETABLESDES" ColumnName="VEGETABLESDES" />
+                <ScalarProperty Name="BIGUNIT" ColumnName="BIGUNIT" />
+                <ScalarProperty Name="SMALLUNIT" ColumnName="SMALLUNIT" />
+                <ScalarProperty Name="PACKRULE" ColumnName="PACKRULE" />
+                <ScalarProperty Name="TYPEID" ColumnName="TYPEID" />
+                <ScalarProperty Name="TYPENAME" ColumnName="TYPENAME" />
+                <ScalarProperty Name="CREATEUSERNAME" ColumnName="CREATEUSERNAME" />
+                <ScalarProperty Name="CREATEDATETIME" ColumnName="CREATEDATETIME" />
+                <ScalarProperty Name="CREATEUSERID" ColumnName="CREATEUSERID" />
+                <ScalarProperty Name="DELETEUSER" ColumnName="DELETEUSER" />
+                <ScalarProperty Name="DELETEDATE" ColumnName="DELETEDATE" />
+                <ScalarProperty Name="ISDELETED" ColumnName="ISDELETED" />
+                <ScalarProperty Name="BIGIMAGEURL" ColumnName="BIGIMAGEURL" />
+                <ScalarProperty Name="SMALLIMAGEURL" ColumnName="SMALLIMAGEURL" />
+                <ScalarProperty Name="STOREID" ColumnName="STOREID" />
+                <ScalarProperty Name="STORENAME" ColumnName="STORENAME" />
+                <ScalarProperty Name="BIGPRICE" ColumnName="BIGPRICE" />
+                <ScalarProperty Name="SMALLPRICE" ColumnName="SMALLPRICE" />
+                <ScalarProperty Name="STORECOUNT" ColumnName="STORECOUNT" />
+                <ScalarProperty Name="ISPROMOTE" ColumnName="ISPROMOTE" />
+                <ScalarProperty Name="PROMOTEINFO" ColumnName="PROMOTEINFO" />
+                <ScalarProperty Name="VEGETABLESID" ColumnName="VEGETABLESID" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEGETABLESTYPE">
+            <EntityTypeMapping TypeName="jincaiModel.VEGETABLESTYPE">
+              <MappingFragment StoreEntitySet="VEGETABLESTYPE">
+                <ScalarProperty Name="SEQUENCE" ColumnName="SEQUENCE" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="VEGETABLESNAME" ColumnName="VEGETABLESNAME" />
+                <ScalarProperty Name="PARENTTYPEID" ColumnName="PARENTTYPEID" />
+                <ScalarProperty Name="CREATEUSERNAME" ColumnName="CREATEUSERNAME" />
+                <ScalarProperty Name="CREATEDATETIME" ColumnName="CREATEDATETIME" />
+                <ScalarProperty Name="ISDELETED" ColumnName="ISDELETED" />
+                <ScalarProperty Name="DELETEUSER" ColumnName="DELETEUSER" />
+                <ScalarProperty Name="DELETEDATE" ColumnName="DELETEDATE" />
+                <ScalarProperty Name="CREATEUSERID" ColumnName="CREATEUSERID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEGETABLESPARENTTYPE">
+            <EntityTypeMapping TypeName="jincaiModel.VEGETABLESPARENTTYPE">
+              <MappingFragment StoreEntitySet="VEGETABLESPARENTTYPE">
+                <ScalarProperty Name="SEQUENCE" ColumnName="SEQUENCE" />
+                <ScalarProperty Name="DELETEDATE" ColumnName="DELETEDATE" />
+                <ScalarProperty Name="DELETEUSER" ColumnName="DELETEUSER" />
+                <ScalarProperty Name="ISDELETED" ColumnName="ISDELETED" />
+                <ScalarProperty Name="CREATEUSERID" ColumnName="CREATEUSERID" />
+                <ScalarProperty Name="CREATEDATETIME" ColumnName="CREATEDATETIME" />
+                <ScalarProperty Name="CREATEUSERNAME" ColumnName="CREATEUSERNAME" />
+                <ScalarProperty Name="VEGETABLESNAME" ColumnName="VEGETABLESNAME" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMERINFO">
+            <EntityTypeMapping TypeName="jincaiModel.CUSTOMERINFO">
+              <MappingFragment StoreEntitySet="CUSTOMERINFO">
+                <ScalarProperty Name="CITYID" ColumnName="CITYID" />
+                <ScalarProperty Name="DELETETIME" ColumnName="DELETETIME" />
+                <ScalarProperty Name="DELETEUSER" ColumnName="DELETEUSER" />
+                <ScalarProperty Name="ISDELETED" ColumnName="ISDELETED" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="SALESMANID" ColumnName="SALESMANID" />
+                <ScalarProperty Name="SALESMANNAME" ColumnName="SALESMANNAME" />
+                <ScalarProperty Name="BUSINESSLICENSE" ColumnName="BUSINESSLICENSE" />
+                <ScalarProperty Name="INVITECODE" ColumnName="INVITECODE" />
+                <ScalarProperty Name="ADDR" ColumnName="ADDR" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="SHOPLEADERNAME" ColumnName="SHOPLEADERNAME" />
+                <ScalarProperty Name="SHOPNAME" ColumnName="SHOPNAME" />
+                <ScalarProperty Name="CUSTOMERPWD" ColumnName="CUSTOMERPWD" />
+                <ScalarProperty Name="CUSTOMERPHONE" ColumnName="CUSTOMERPHONE" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_USER">
+            <EntityTypeMapping TypeName="jincaiModel.SYS_USER">
+              <MappingFragment StoreEntitySet="SYS_USER">
+                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="HEADLOG" ColumnName="HEADLOG" />
+                <ScalarProperty Name="DELETEDATE" ColumnName="DELETEDATE" />
+                <ScalarProperty Name="DELETEUSER" ColumnName="DELETEUSER" />
+                <ScalarProperty Name="ISDELETED" ColumnName="ISDELETED" />
+                <ScalarProperty Name="OPERATEDATE" ColumnName="OPERATEDATE" />
+                <ScalarProperty Name="OPERATORNAME" ColumnName="OPERATORNAME" />
+                <ScalarProperty Name="OPERATORID" ColumnName="OPERATORID" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+                <ScalarProperty Name="MOBILE" ColumnName="MOBILE" />
+                <ScalarProperty Name="POSITIONNAME" ColumnName="POSITIONNAME" />
+                <ScalarProperty Name="POSITIONID" ColumnName="POSITIONID" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="QQ" ColumnName="QQ" />
+                <ScalarProperty Name="ROLENAME" ColumnName="ROLENAME" />
+                <ScalarProperty Name="ROLEID" ColumnName="ROLEID" />
+                <ScalarProperty Name="LASTTIME" ColumnName="LASTTIME" />
+                <ScalarProperty Name="SEQUENCE" ColumnName="SEQUENCE" />
+                <ScalarProperty Name="ALLOWLOGIN" ColumnName="ALLOWLOGIN" />
+                <ScalarProperty Name="DEPTNAME" ColumnName="DEPTNAME" />
+                <ScalarProperty Name="DEPTID" ColumnName="DEPTID" />
+                <ScalarProperty Name="SHORTNAME" ColumnName="SHORTNAME" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_DATADIC">
+            <EntityTypeMapping TypeName="jincaiModel.SYS_DATADIC">
+              <MappingFragment StoreEntitySet="SYS_DATADIC">
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="LASTUPDATEUSER" ColumnName="LASTUPDATEUSER" />
+                <ScalarProperty Name="LASTUPDATEDATE" ColumnName="LASTUPDATEDATE" />
+                <ScalarProperty Name="ISDEFAULT" ColumnName="ISDEFAULT" />
+                <ScalarProperty Name="SUBNAMES" ColumnName="SUBNAMES" />
+                <ScalarProperty Name="SUBIDS" ColumnName="SUBIDS" />
+                <ScalarProperty Name="PARENTID" ColumnName="PARENTID" />
+                <ScalarProperty Name="DISABLEDUSER" ColumnName="DISABLEDUSER" />
+                <ScalarProperty Name="DISABLEDDATE" ColumnName="DISABLEDDATE" />
+                <ScalarProperty Name="ISDISABLED" ColumnName="ISDISABLED" />
+                <ScalarProperty Name="DELETEDATE" ColumnName="DELETEDATE" />
+                <ScalarProperty Name="DELETEUSER" ColumnName="DELETEUSER" />
+                <ScalarProperty Name="ISDELETED" ColumnName="ISDELETED" />
+                <ScalarProperty Name="OPERATEDATE" ColumnName="OPERATEDATE" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="SEQUENCE" ColumnName="SEQUENCE" />
+                <ScalarProperty Name="UNIQUEFLAG" ColumnName="UNIQUEFLAG" />
+                <ScalarProperty Name="DICLISTNAME" ColumnName="DICLISTNAME" />
+                <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+                <ScalarProperty Name="ABBRE" ColumnName="ABBRE" />
+                <ScalarProperty Name="DICNAME" ColumnName="DICNAME" />
+                <ScalarProperty Name="DICID" ColumnName="DICID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_DATADICLIST">
+            <EntityTypeMapping TypeName="jincaiModel.SYS_DATADICLIST">
+              <MappingFragment StoreEntitySet="SYS_DATADICLIST">
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="PARENTCODE" ColumnName="PARENTCODE" />
+                <ScalarProperty Name="SEQUENCE" ColumnName="SEQUENCE" />
+                <ScalarProperty Name="ISTREE" ColumnName="ISTREE" />
+                <ScalarProperty Name="UNIQUEFLAG" ColumnName="UNIQUEFLAG" />
+                <ScalarProperty Name="DATANAME" ColumnName="DATANAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BUSINESSAREA">
+            <EntityTypeMapping TypeName="jincaiModel.BUSINESSAREA">
+              <MappingFragment StoreEntitySet="BUSINESSAREA">
+                <ScalarProperty Name="DELETETIME" ColumnName="DELETETIME" />
+                <ScalarProperty Name="DELETEUSER" ColumnName="DELETEUSER" />
+                <ScalarProperty Name="ISDELETED" ColumnName="ISDELETED" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEGETABLESNAMEBASE">
+            <EntityTypeMapping TypeName="jincaiModel.VEGETABLESNAMEBASE">
+              <MappingFragment StoreEntitySet="VEGETABLESNAMEBASE">
+                <ScalarProperty Name="BUSINESSAREAIDS" ColumnName="BUSINESSAREAIDS" />
+                <ScalarProperty Name="BUSINESSAREANAMES" ColumnName="BUSINESSAREANAMES" />
+                <ScalarProperty Name="SEQUENCE" ColumnName="SEQUENCE" />
+                <ScalarProperty Name="DELETEDATE" ColumnName="DELETEDATE" />
+                <ScalarProperty Name="DELETEUSER" ColumnName="DELETEUSER" />
+                <ScalarProperty Name="ISDELETED" ColumnName="ISDELETED" />
+                <ScalarProperty Name="CREATEUSERID" ColumnName="CREATEUSERID" />
+                <ScalarProperty Name="CREATEDATETIME" ColumnName="CREATEDATETIME" />
+                <ScalarProperty Name="CREATEUSERNAME" ColumnName="CREATEUSERNAME" />
+                <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+                <ScalarProperty Name="PACKRULE" ColumnName="PACKRULE" />
+                <ScalarProperty Name="SMALLIMAGEURL" ColumnName="SMALLIMAGEURL" />
+                <ScalarProperty Name="BIGIMAGEURL" ColumnName="BIGIMAGEURL" />
+                <ScalarProperty Name="TYPENAME" ColumnName="TYPENAME" />
+                <ScalarProperty Name="TYPEID" ColumnName="TYPEID" />
+                <ScalarProperty Name="SMALLUNIT" ColumnName="SMALLUNIT" />
+                <ScalarProperty Name="BIGUNIT" ColumnName="BIGUNIT" />
+                <ScalarProperty Name="VEGETABLESDES" ColumnName="VEGETABLESDES" />
+                <ScalarProperty Name="VEGETABLESNAME" ColumnName="VEGETABLESNAME" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERLIST">
+            <EntityTypeMapping TypeName="jincaiModel.ORDERLIST">
+              <MappingFragment StoreEntitySet="ORDERLIST">
+                <ScalarProperty Name="ORDERSTATUSNAME" ColumnName="ORDERSTATUSNAME" />
+                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="STOREID" ColumnName="STOREID" />
+                <ScalarProperty Name="STORENAME" ColumnName="STORENAME" />
+                <ScalarProperty Name="CUSTOMERID" ColumnName="CUSTOMERID" />
+                <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+                <ScalarProperty Name="ORDERTIME" ColumnName="ORDERTIME" />
+                <ScalarProperty Name="ORDERSTATUS" ColumnName="ORDERSTATUS" />
+                <ScalarProperty Name="ORDERTOTALMONEY" ColumnName="ORDERTOTALMONEY" />
+                <ScalarProperty Name="CUSTOMERSHOPNAME" ColumnName="CUSTOMERSHOPNAME" />
+                <ScalarProperty Name="ORDERCODE" ColumnName="ORDERCODE" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEGETABLESINFOCHANGELOG">
+            <EntityTypeMapping TypeName="jincaiModel.VEGETABLESINFOCHANGELOG">
+              <MappingFragment StoreEntitySet="VEGETABLESINFOCHANGELOG">
+                <ScalarProperty Name="CHANGEDATE" ColumnName="CHANGEDATE" />
+                <ScalarProperty Name="VEGETABLESID" ColumnName="VEGETABLESID" />
+                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="NEWSMALLPRICE" ColumnName="NEWSMALLPRICE" />
+                <ScalarProperty Name="NEWBIGPRICE" ColumnName="NEWBIGPRICE" />
+                <ScalarProperty Name="OLDSMALLPRICE" ColumnName="OLDSMALLPRICE" />
+                <ScalarProperty Name="OLDBIGPRICE" ColumnName="OLDBIGPRICE" />
+                <ScalarProperty Name="STORENAME" ColumnName="STORENAME" />
+                <ScalarProperty Name="STOREID" ColumnName="STOREID" />
+                <ScalarProperty Name="CREATEUSERID" ColumnName="CREATEUSERID" />
+                <ScalarProperty Name="CREATEDATETIME" ColumnName="CREATEDATETIME" />
+                <ScalarProperty Name="CREATEUSERNAME" ColumnName="CREATEUSERNAME" />
+                <ScalarProperty Name="TYPENAME" ColumnName="TYPENAME" />
+                <ScalarProperty Name="TYPEID" ColumnName="TYPEID" />
+                <ScalarProperty Name="PACKRULE" ColumnName="PACKRULE" />
+                <ScalarProperty Name="SMALLUNIT" ColumnName="SMALLUNIT" />
+                <ScalarProperty Name="BIGUNIT" ColumnName="BIGUNIT" />
+                <ScalarProperty Name="VEGETABLESNAME" ColumnName="VEGETABLESNAME" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

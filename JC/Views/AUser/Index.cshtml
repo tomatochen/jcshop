@@ -1,0 +1,165 @@
+﻿@* cgl *@
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/">首页</a>
+        </li>
+        <li class="active">管理用户管理</li>
+    </ul><!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div style="margin-bottom:6px;">
+        <a href="@Url.Action("Create", "AUser")" class="btn btn-success btn-sm">
+            <i class="ace-icon fa fa-plus-circle bigger-125"></i>新增
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 chaxunWaiDiv">
+            <form id="query_from">
+                <div class="form-inline gaojiChaXun_hide" id="GJ_waiCengDiv">
+                    <div>
+                        <label> 用户名： <input type="text" name="username" style="width:120px;"></label>
+                        <label> 姓    名： <input type="text" name="fullname" style="width:120px;"></label>
+                        <label> 区    域： @Html.DropDownList4("ddl_area", "", ViewData["Area"] as List<JC.Models.SelectOption>)</label>
+                        <div class="input-group">
+                            <span class="btn-group">
+                                <button onclick="query();" style="line-height:20px;" class="btn btn-grey btn-sm" type="button">
+                                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                                    查询
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="space-4"></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table id="grid-table"></table>
+            <div id="grid-pager"></div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var grid_selector = "#grid-table";
+    var pager_selector = "#grid-pager";
+    function EditLink(id) {
+        var url = "@Url.Action("Create", "AUser")" + '?q_userid=' + id;
+        location.href = url;
+    }
+
+    @*function DetailLink(id) {
+        var url = "@Url.Action("Create", "CustomerInfo")" + '?q_guid=' + id;
+        location.href = url;
+    }*@
+
+    function DeleteByID(id) {
+        var url = '@Url.Action("Delete", "AUser")';
+        $.confirm('确定要删除选中的记录！', function () {
+            $.get2(url, { q_id: id }, function (d) {
+                if (d.Success) {
+                    cglalert(d.Message, function () {
+                        refresh_grid();
+                    })
+                }
+            })
+        })
+
+    }
+    function refresh_grid() {
+        var curpagenum = $(grid_selector).jqGrid('getGridParam', 'page');//当前页码
+        $(grid_selector).jqGrid('setGridParam', { page: curpagenum, url: grid_url() }).trigger("reloadGrid");
+        var objrows = $(grid_selector).jqGrid('getRowData');//当前页一共有多少行(当前页实际显示了多少行记录)
+
+        if (objrows.length == 0) {
+            $(grid_selector).jqGrid('setGridParam', { page: curpagenum - 1 }).trigger("reloadGrid");
+        }
+    }
+    function query() {
+        refresh_grid();
+    }
+    var grid_url = function () {
+        var url = '@Url.Action("List", "AUser")' + "?" + $('#query_from').serialize();
+        return url;
+    }
+    function InitGrid() {
+
+        $(grid_selector).jqGrid({
+            url: grid_url(),
+            datatype: 'json',
+            colModel: [
+                    { name: 'USERID', index: 'USERID', width: 100, sortable: false, hidden: true, key: true },
+                    { name: 'USERNAME', index: 'USERNAME', label: '用户名', width: 80, align: 'left' },
+                    { name: 'FULLNAME', index: 'FULLNAME', label: '姓名', width: 80, align: 'left' },
+                    { name: 'QQ', index: 'QQ', label: 'QQ', width: 80, align: 'left' },
+                    { name: 'EMAIL', index: 'EMAIL', label: 'EMAIL', width: 80, align: 'left' },
+                    { name: 'MOBILE', index: 'MOBILE', label: '手机号', width: 80, align: 'left' },
+                    { name: 'LASTTIME', index: 'LASTTIME', label: '最后登陆时间', width: 80, align: 'left' },
+                    { name: 'ALLOWLOGIN', index: 'ALLOWLOGIN', label: '是否启用', width: 80, align: 'left' },
+                    { name: 'SEQUENCE', index: 'SEQUENCE', label: '序号', width: 80, align: 'left' },
+                    { name: 'AREANAME', index: 'AREANAME', label: '区域', width: 80, align: 'left' },
+                    {
+                        name: '', index: '', label: '操作',  fixed: true, align: 'center',
+                        sorttype: "string",
+                        sortable: false,
+                        formatter: function (cellvalue, options, rowObject) {
+                            return '<div class=\"btn btn-xs btn-primary no-padding no-margin\" onclick=\"EditLink(\'' + options.rowId + '\');\">修改</div>  <div class=\"btn btn-xs btn-danger no-padding no-margin\" onclick=\"DeleteByID(\'' + options.rowId + '\');\">删除</div>';
+                        }
+                    }
+            ],
+            sortname: 'SEQUENCE',
+            multiselect: true,
+            editfunc: function (id, data) {
+                alert(id);
+            },
+            delfunc: function (id, data) {
+                alert(id);
+            },
+            height: "auto",//grid高度
+            rownumbers: true,
+            rowNum: 10,
+            rowList: [10, 15, 20],
+            sortorder: 'asc',
+            viewrecords: true,
+            pager: $(pager_selector),
+            autowidth: true,
+            loadComplete: function () {
+                var table = this;
+                setTimeout(function () {
+                    forjqgrid(table);
+                }, 0);
+            }
+        });
+    }
+    $(function () {
+        $('#a12').addClass("active open");
+        $('#a12_00').addClass("active");
+        $(window).on('resize.jqGrid', function () {
+            $(grid_selector).jqGrid('setGridWidth', $(".page-content").width());
+        })
+        InitGrid();
+        $(document).one('ajaxloadstart.page', function (e) {
+            $(grid_selector).jqGrid('GridUnload');
+            $('.ui-jqdialog').remove();
+        });
+
+    })
+
+</script>

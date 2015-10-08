@@ -1,0 +1,216 @@
+﻿@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/">首页</a>
+        </li>
+        <li class="active">菜品价格维护</li>
+    </ul><!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            菜品价格维护
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                将现有菜品信息分类保存到数据库
+            </small>
+        </h1>
+    </div>
+    <div style="margin-bottom:6px;">
+        @*<a href="@Url.Action("Create", "VegeInfo")" class="btn btn-success btn-sm">
+                <i class="ace-icon fa fa-plus-circle bigger-125"></i>批量修改销售价格
+            </a>*@
+        <input class="btn btn-success btn-sm" type="button" value="批量修改价格" onclick="startEdit()" />
+        <input class="btn btn-success btn-sm" type="button" value="批量保存价格" onclick="saveRows()" />
+    </div>
+    <div class="space-4"></div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table id="grid-table"></table>
+            <div id="grid-pager"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var grid_selector = "#grid-table";
+    var pager_selector = "#grid-pager";
+    function EditLink(id) {
+        var url = "@Url.Action("Create", "VegeInfo")" + '?id=' + id + '&operation=edit';
+        location.href = url;
+    }
+
+    function DetailLink(id) {
+        var url = "@Url.Action("Create", "VegeInfo")" + '?id=' + id;
+        location.href = url;
+    }
+
+    function DeleteByID(id) {
+        var url = '@Url.Action("Delete", "VegeInfo")';
+        $.confirm('确定要删除选中的记录！', function () {
+            $.get2(url, { id: id }, function (d) {
+                if (d.Success) {
+                    cglalert(d.Message, function () {
+                        refresh_grid();
+                    })
+                }
+            })
+        })
+
+    }
+    function refresh_grid() {
+        var curpagenum = $(grid_selector).jqGrid('getGridParam', 'page');//当前页码
+        $(grid_selector).jqGrid('setGridParam', { page: curpagenum, url: grid_url() }).trigger("reloadGrid");
+        var objrows = $(grid_selector).jqGrid('getRowData');//当前页一共有多少行(当前页实际显示了多少行记录)
+
+        if (objrows.length == 0) {
+            $(grid_selector).jqGrid('setGridParam', { page: curpagenum - 1 }).trigger("reloadGrid");
+        }
+    }
+    var grid_url = function () {
+        var url = '@Url.Action("List", "VegeInfo")'; //+ "?" + $('#query_from').serialize();
+        return url;
+    }
+    //列表批量编辑
+    function startEdit() {
+        var grid = $(grid_selector);
+        var ids = grid.jqGrid('getDataIDs');
+        for (var i = 0; i < ids.length; i++) {
+            grid.jqGrid('editRow', ids[i]);
+        }
+    }
+    //列表批量保存
+    function saveRows() {
+        var grid = $(grid_selector);
+        var ids = grid.jqGrid('getDataIDs');
+        for (var i = 0; i < ids.length; i++) {
+            //var cv = grid.getCell(ids[i], "BIGPRICE");//获取编辑的单元格数据
+            var cv = $("#" + ids[i] + "_BIGPRICE").val();//获取编辑的单元格数据
+            grid.jqGrid('setGridParam', { editurl: "@Url.Action("ChangeSalePrice", "VegeInfo")" + "?newbigprice=" + cv + "&id=" + ids[i] })
+            grid.jqGrid('saveRow', ids[i], checksave);//checksave为回调函数，接收保存返回的信息
+
+        }
+    }
+    //checksave为回调函数，接收行编辑保存返回的信息
+    function checksave(result) {
+        debugger;
+        if (result.responseJSON.Success == true) {
+            debugger;
+            if (result.responseJSON.Message.indexOf('不') >= 0) {//result.responseJSON.Message.indexOf('不') 原始价格和修改后价格一样的不修改
+            }
+            else {
+                //$(grid_selector).jqGrid('setRowData', result.responseJSON.ID, false, {"background":"green"});//更改行的背景颜色
+                $(grid_selector).jqGrid('setCell', result.responseJSON.ID, "BIGPRICE", false, { "background": "#BEFCB2" });//更改单元格字体颜色
+            }
+        }
+        else {
+            //alert("Update is missing!" + result.responseJSON.ID);
+            $(grid_selector).jqGrid('setCell', result.responseJSON.ID, "BIGPRICE", false, { "background": "yellow" });//更改单元格字体颜色
+            return false;
+        }
+        return true;
+    }
+    $(function () {
+        $('#a15').addClass("active open");
+        $('#a1504').addClass("active");
+        $(window).on('resize.jqGrid', function () {
+            $(grid_selector).jqGrid('setGridWidth', $(".page-content").width());
+        })
+
+        $(grid_selector).jqGrid({
+            url: grid_url(),
+            datatype: 'json',
+            colModel: [
+                    {
+                        name: '修改价格', index: '', width: 80, fixed: true, sortable: false, resize: false,
+                        formatter: 'actions',
+                        formatoptions: {
+                            keys: true,
+                            delbutton: false,//disable delete button
+                            delOptions: { recreateForm: true, beforeShowForm: beforeDeleteCallback },
+                            //editformbutton: true,
+                            //editOptions: { recreateForm: true, beforeShowForm: beforeEditCallback }
+                        }
+                    },
+                    { name: 'GUID', index: 'GUID', sortable: false, key: true, hidden: true },
+                    { name: 'BIGPRICE', index: 'BIGPRICE', label: '价格（按大包装）', cellattr: addCellAttr, editable: true, width: 50, align: 'right' },
+                    { name: 'VEGETABLESNAME', index: 'VEGETABLESNAME', label: '菜品名称', width: 60, align: 'left' },
+                    { name: 'VEGETABLESDES', index: 'VEGETABLESDES', label: '菜品描述', width: 80, align: 'left' },
+                    { name: 'BIGUNIT', index: 'BIGUNIT', label: '大包装', width: 30, align: 'left' },
+                    { name: 'SMALLUNIT', index: 'SMALLUNIT', label: '小包装', width: 30, align: 'left' },
+                    { name: 'PACKRULE', index: 'PACKRULE', label: '分装量', width: 30, align: 'left' },
+                    { name: 'TYPENAME', index: 'TYPENAME', label: '所属品类', width: 50, align: 'left' },
+                    { name: 'SMALLIMAGEURL', index: 'SMALLIMAGEURL', label: '图片', width: 40, align: 'left' },
+                    { name: 'SEQUENCE', index: 'SEQUENCE', label: '排序号', width: 30, align: 'left' },
+                    {
+                        name: '', index: '', label: '操作', fixed: true, align: 'center', hidden: true,
+                        sorttype: "string",
+                        sortable: false,
+                        formatter: function (cellvalue, options, rowObject) {
+                            return '<div class=\"btn btn-xs btn-primary no-padding no-margin\" onclick=\"DetailLink(\'' + options.rowId + '\');\">详情</div> <div class=\"btn btn-xs btn-primary no-padding no-margin\" onclick=\"EditLink(\'' + options.rowId + '\');\">修改</div>  <div class=\"btn btn-xs btn-danger no-padding no-margin\" onclick=\"DeleteByID(\'' + options.rowId + '\');\">删除</div>';
+                        }
+                    }
+            ],
+            sortname: 'SEQUENCE',
+            multiselect: true,
+            editfunc: function (id, data) {
+                alert(id);
+            },
+            delfunc: function (id, data) {
+                alert(id);
+            },
+            editurl: "@Url.Action("ChangeSalePrice", "VegeInfo")",//行编辑时的提交路径
+            height: "auto",//grid高度
+            rownumbers: true,
+            rowNum: 50,
+            rowList: [50, 100, 150],
+            sortorder: 'asc',
+            viewrecords: true,
+            pager: $(pager_selector),
+            autowidth: true,
+            loadComplete: function () {
+                var table = this;
+                setTimeout(function () {
+                    forjqgrid(table);
+                }, 0);
+            }
+        });
+        $(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x": "hidden" });//去掉jqgrid的横向滚动条
+        //加载列表时控制单元格样式
+        function addCellAttr(rowId, val, rawObject, cm, rdata) {
+            if (1 == 1) {
+                //return "style='color:red'";
+            }
+        }
+        function beforeDeleteCallback(e) {
+            var form = $(e[0]);
+            if (form.data('styled')) return false;
+            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            style_delete_form(form);
+            form.data('styled', true);
+        }
+        function style_delete_form(form) {
+            var buttons = form.next().find('.EditButton .fm-button');
+            buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
+            buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
+            buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
+        }
+
+        $(document).one('ajaxloadstart.page', function (e) {
+            $(grid_selector).jqGrid('GridUnload');
+            $('.ui-jqdialog').remove();
+        });
+
+    })
+
+</script>

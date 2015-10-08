@@ -1,0 +1,170 @@
+﻿<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/">首页</a>
+        </li>
+        <li class="active">数据字典</li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            数据字典
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                将现有菜品信息分类保存到数据库
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-responsive no-border">
+                <tbody>
+                    <tr>
+                        <td style="width: 240px; border-top: none;">
+                            <ul id="mytree" class="ztree" style=" overflow:auto;"></ul>
+                        </td>
+                        <td style="border-top: none;">
+                            <form role="form" class="form-horizontal" id="validation_zidianlanmu">
+                                <div class="form-group">
+                                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">标识：</label>
+                                    <div class="col-sm-8">
+                                        <div class="clearfix">
+                                            <input type="text" name="UniqueFlag" id="UniqueFlag" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">栏目名称：</label>
+                                    <div class="col-sm-8">
+                                        <div class="clearfix">
+                                            <input type="text" name="Diclistname" id="Diclistname" class="form-control" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">名称：</label>
+                                    <div class="col-sm-8">
+                                        <div class="clearfix">
+                                            <input type="text" name="Dicname" id="Dicname" class="form-control" validate="{required:true,messages: { required: '请输入名称！'}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">简称：</label>
+                                    <div class="col-sm-8">
+                                        <div class="clearfix">
+                                            <input type="text" name="Abbre" id="Abbre" class="form-control" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix form-actions">
+                                    <div class="col-md-offset-5 col-md-7">
+
+                                        <input type="hidden" name="ID" id="ID">
+                                        <button type="button" class="btn btn-success btn-sm" name="btn_submitDic" onclick="submitDic(); return false;">
+                                            <i class="ace-icon fa fa-plus-circle bigger-125"></i>确定
+                                        </button>
+                                        <button type="reset" class="btn btn-danger btn-sm" id="btn_reset">
+                                            <i class="ace-icon fa fa-times bigger-125"></i>取消
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="list_dic">
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#a12').addClass("active open");
+        $('#a12_03').addClass("active");
+        InitializeTree();
+        $.metadata.setType("attr", "validate");
+        Tool.validate($("#validation_zidianlanmu"));
+    })
+    function submitDic() {
+        var a = $("#validation_zidianlanmu").valid();
+        if (a) {
+            var data = get_form_data('validation_zidianlanmu');
+            var url = '@Url.Action("Create", "Dic")';
+            $.post(url, data, function (d) {
+                if (d.Success) {
+                    cglalert(d.Message, function () {
+                        $("#Dicname").val("");
+                        $("#Abbre").val("");
+                        InitializeTree();
+                        load_list_dic();
+                    });
+                } else {
+                    cglalert(d.Message);
+                }
+            });
+        }
+    }
+    //角色树节点点击
+    function zTreeOnClick(event, treeId, treeNode) {
+        log(treeNode);
+        if (treeNode.isParent)
+        {
+            $('#Diclistname').val(treeNode.name);
+            $('#UniqueFlag').val(treeNode.id);
+            load_list_dic();
+        }
+
+    };
+    function load_list_dic() {
+        var url = '@Url.Action("List", "Dic")' + "?UniqueFlag=" + $('#UniqueFlag').val();
+        $('#list_dic').empty().load(url);
+    }
+    function InitializeTree() {
+
+        var zTreeNodes;
+
+        var setting = {
+            view: {
+                selectedMulti: false
+            },
+            callback: {
+                onClick: zTreeOnClick
+            }
+        };
+
+        $.ajax({
+            //要用post方式
+            type: "get",
+            //方法所在页面和方法名
+            url: "@Url.Action("GetAll", "Dic")",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,//同步
+            success: function (data) {
+                try {
+                    if (data.Success) {
+                        zTreeNodes = JSON.parse(data.Obj);
+
+                        zTreeObj = $.fn.zTree.init($("#mytree"), setting, zTreeNodes);
+                    } else {
+
+                    }
+                } catch (ex) {
+                    alert(ex.Message);
+                }
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+</script>

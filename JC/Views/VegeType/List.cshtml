@@ -1,0 +1,66 @@
+﻿@model IEnumerable<JC.Models.VEGETABLESTYPE>
+
+<table class="table  table-bordered">
+    <thead>
+        <tr>
+            <th>
+                分类名称
+            </th>
+            <th>
+                创建人
+            </th>
+            <th>
+                创建时间
+            </th>
+            <th>
+                序号
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEGETABLESNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CREATEUSERNAME)
+            </td>
+            <td>
+                @Html.DateView(item.CREATEDATETIME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SEQUENCE)
+        </td>
+        <td>
+            @Html.EditButton("", "f_edit", item.GUID.ToString())
+            @Html.DelelteButton("", "f_delete", item.GUID.ToString())
+        </td>
+    </tr>
+    }
+
+</table>
+
+<script>
+    function f_edit(id) {
+        var url = '@Url.Action("Find", "VegeType")' + "?q_id=" + id;
+        $.get(url, function (d) {
+            var data = JSON.parse(d.Obj);
+            
+            var $p = $('#validation_zidianlanmu');
+            $('#GUID', $p).val(data.GUID);
+            $('#SEQUENCE', $p).val(data.SEQUENCE);
+            $('#VEGETABLESNAME', $p).val(data.VEGETABLESNAME);
+            log(data);
+        });
+    }
+    function f_delete(id) {
+        var url = '@Url.Action("Delete", "VegeType")' + "?q_id=" + id;
+        $.get(url, function () {
+            load_list_dic();
+        });
+    }
+</script>

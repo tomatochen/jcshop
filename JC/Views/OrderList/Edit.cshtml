@@ -1,0 +1,104 @@
+﻿@model JC.Models.ORDERLIST
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/">首页</a>
+        </li>
+        <li>订单管理</li>
+        <li class="active">订单状态修改</li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <form role="form" class="form-horizontal" id="validation_zidianlanmu">
+                <div class="form-group">
+                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">订单号：</label>
+                    <div class="col-sm-4">
+                        <input type="hidden" name="Guid" id="Guid" value="@Model.GUID" readonly="readonly" />
+                        <input type="text" value="@Model.ORDERCODE" readonly="readonly" class="form-control">
+                    </div>
+                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">客户商铺名称：</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="@Model.CUSTOMERSHOPNAME" readonly="readonly" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">订单总额：</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="@Html.CValue(Model.ORDERTOTALMONEY)" readonly="readonly" class="form-control">
+                    </div>
+                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">订单状态：</label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList2("DDZT", "OrderStatus", Model.ORDERSTATUS)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">下单时间：</label>
+                    <div class="col-sm-10">
+                        <input type="text" value="@Html.CValue(Model.ORDERTIME, "yyyy-MM-dd hh:MM:ss")" readonly="readonly" class="form-control">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">所属仓储名称：</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="@Model.STORENAME" readonly="readonly" class="form-control">
+                    </div>
+                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">所属地域名称：</label>
+                    <div class="col-sm-4">
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="form-field-1" class="col-sm-2 control-label no-padding-right">备注：</label>
+                    <div class="col-sm-10">
+                        <input type="text" value="@Model.REMARK" readonly="readonly" class="form-control">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12" id="orderDetail">
+
+        </div>
+    </div>
+</div>
+<script>
+    var $OrderStatus;
+    $(function () {
+        $OrderStatus = $('#OrderStatus');
+        $OrderStatus.change(function () {
+            var url = '@Url.Action("ChangeStatus", "OrderList")';
+            $.get(url, data, function (d) {
+                if (d.Success) {
+                    cglalert(d.Message);
+                } else {
+                    cglalert(d.Message);
+                }
+            });
+        });
+        var url2 = '@Url.Action("List", "OrderDetail")' + "?q_orderid=" + $('#Guid').val();
+        $('#orderDetail').empty().load(url2);
+    })
+    var data = {
+        q_id: function () {
+            return document.getElementById("Guid").value;
+        },
+        q_value: function () {
+            return $OrderStatus.val();
+        },
+        q_text: function () {
+            return $OrderStatus.find("option:selected").text();
+        }
+    }
+</script>

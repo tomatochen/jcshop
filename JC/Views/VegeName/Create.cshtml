@@ -1,0 +1,207 @@
+﻿@model JC.Models.VEGETABLESNAMEBASE
+@{
+    ViewBag.Title = "菜品编辑";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/">菜品列表</a>
+        </li>
+        <li class="active">菜品编辑</li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            菜品编辑
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                将现有菜品信息分类保存到数据库
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div id="user-profile-1" class="user-profile row">
+            <div class="col-xs-12 col-sm-12 center">
+                <form role="form" class="form-horizontal" id="validation_human">
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">菜品名称</label>
+                                <div class="col-sm-10">
+                                    <div class="clearfix">
+                                        <input type="hidden" id="GUID" name="GUID" value="@Model.GUID" />
+                                        <input type="text" id="VEGETABLESNAME" name="VEGETABLESNAME" class="form-control" value="@Model.VEGETABLESNAME">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">菜品描述</label>
+                                <div class="col-sm-10">
+                                    <div class="clearfix" style="text-align:left;">
+                                        <input type="text" id="VEGETABLESDES" name="VEGETABLESDES" class="form-control" value="@Model.VEGETABLESDES">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">一级品类</label>
+                                <div class="col-sm-4">
+                                    <div class="clearfix">
+                                        @Html.CTextBoxFor(model => model.BIGUNIT, true, "请输入大包装单位！")
+                                    </div>
+                                </div>
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">二级品类</label>
+                                <div class="col-sm-4">
+                                    <div class="clearfix">
+                                        @Html.CTextBoxFor(model => model.SMALLUNIT)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">大包装单位</label>
+                                <div class="col-sm-4">
+                                    <div class="clearfix">
+                                        @Html.CTextBoxFor(model => model.BIGUNIT, true, "请输入大包装单位！")
+                                    </div>
+                                </div>
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">小包装单位</label>
+                                <div class="col-sm-4">
+                                    <div class="clearfix">
+                                        @Html.CTextBoxFor(model => model.SMALLUNIT)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">分装量</label>
+                                <div class="col-sm-4">
+                                    <div class="clearfix">
+                                        @Html.CTextBoxFor(model => model.PACKRULE, true, "请输入分装量！")
+                                    </div>
+                                </div>
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">备注</label>
+                                <div class="col-sm-4">
+                                    <div class="clearfix">
+                                        @Html.CTextBoxFor(model => model.REMARK)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-field-1" class="col-sm-2 control-label no-padding-right">供应地区</label>
+                                <div class="col-sm-10">
+                                    <input name="BUSINESSAREAIDS" id="BUSINESSAREAIDS" type="hidden" value="@Model.BUSINESSAREAIDS" />
+                                    <select id="example-onSelectAll" class="multiselect col-sm-4" multiple="multiple">
+                                        <option value="DB725887-9A3C-46EE-B3DE-11C808C2C215">潍坊仓库</option>
+                                        <option value="30A1051D-C639-4E2C-BB9C-5660B666BF89">东营仓库</option>
+                                        <option value="FF1F6165-0D1F-43E7-AB9D-8845EC7D8248">威海仓库</option>
+                                    </select>
+                                    <input type="text" readonly="readonly" class="col-sm-8" name="BUSINESSAREANAMES" id="BUSINESSAREANAMES" value="@Model.BUSINESSAREANAMES" />
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="" style="">
+                                <input type="file" id="file_PHOTO" name="photoFile">
+                            </div>
+                            <span class="profile-picture" style="">
+                                <input name="hid_path" id="hid_path" type="hidden" value="" />
+                                <img src="@Model.BIGIMAGEURL" alt="照片" class="editable img-responsive editable-click editable-empty" height="200" width="180" id="avatar" />
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="clearfix form-actions">
+                        <div class=" col-md-12">
+                            <div class="footer-inner">
+                                <button type="submit" class="btn btn-success btn-sm" onclick="submitHuman(); return false;">
+                                    <i class="ace-icon fa fa-plus-circle bigger-125"></i>确定
+                                </button>
+                                <a href="@Url.Action("Index", "VegeName")" class="btn btn-info btn-sm">
+                                    <i class="ace-icon fa fa-share bigger-125"></i>返回
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+       
+        $('#example-onSelectAll').multiselect({
+            enableFiltering: true,
+            //includeSelectAllOption: true,
+            onChange: function (option, checked, select) {
+                if (checked == true) {
+                    var BUSINESSAREAIDS = trimAll($("#BUSINESSAREAIDS").val(), ',') + ',' + $(option).val();
+                    var BUSINESSAREANAMES = trimAll($("#BUSINESSAREANAMES").val(), ',') + ',' + $(option).text();
+                    $("#BUSINESSAREAIDS").val(',' + trimAll(BUSINESSAREAIDS, ',') + ',');
+                    $("#BUSINESSAREANAMES").val(',' + trimAll(BUSINESSAREANAMES, ',') + ',');
+
+                }
+                else {
+                    var BUSINESSAREAIDS = $("#BUSINESSAREAIDS").val().replace(',' + $(option).val() + ',', ',');
+                    var BUSINESSAREANAMES = $("#BUSINESSAREANAMES").val().replace(',' + $(option).text() + ',', ',');
+                    $("#BUSINESSAREAIDS").val(BUSINESSAREAIDS == ',' ? '' : BUSINESSAREAIDS);
+                    $("#BUSINESSAREANAMES").val(BUSINESSAREANAMES == ',' ? '' : BUSINESSAREANAMES);
+                }
+            },
+            //onSelectAll: function() {
+            //    alert('onSelectAll triggered.');
+            //},
+            buttonClass: 'btn btn-white btn-primary',
+            templates: {
+                button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"></button>',
+                ul: '<ul class="multiselect-container dropdown-menu"></ul>',
+                filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span><input class="form-control multiselect-search" type="text"></div></li>',
+                filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default btn-white btn-grey multiselect-clear-filter" type="button"><i class="fa fa-times-circle red2"></i></button></span>',
+                li: '<li><a href="javascript:void(0);"><label></label></a></li>',
+                divider: '<li class="multiselect-item divider"></li>',
+                liGroup: '<li class="multiselect-item group"><label class="multiselect-group"></label></li>'
+            }
+        });
+        if ($("#BUSINESSAREAIDS") != '') {
+            var arrValue = trimAll($("#BUSINESSAREAIDS").val(), ',').split(',');
+            $('#example-onSelectAll').multiselect('select', arrValue);
+        }
+        $.metadata.setType("attr", "validate");
+        Tool.validate($("#validation_human"));
+        loadUploadify("@Url.Action("Upload", "Common")", function (d) {
+            var o = eval('(' + d + ')');
+            $('#hid_path').val(o.SaveName);
+            $('#avatar').attr("src", "../Upload/" + o.SaveName);
+        });
+
+    })
+    function submitHuman() {
+        var a = $("#validation_human").valid();
+        if (a) {
+            var data = get_form_data('validation_human');
+            var url = '@Url.Action("Create", "VegeName")';
+            $.post(url, data, function (d) {
+                log(d);
+                if (d.Success) {
+                    cglalert(d.Message, function () {
+                        location.href = '@Url.Action("Index", "VegeName")';
+                    });
+                }
+            });
+        }
+
+    }
+
+</script>

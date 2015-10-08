@@ -1,0 +1,68 @@
+﻿@model HResource.Models.HR_SYS_DATADICLIST
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>HR_SYS_DATADICLIST</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DATANAME)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DATANAME)
+            @Html.ValidationMessageFor(model => model.DATANAME)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UNIQUEFLAG)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UNIQUEFLAG)
+            @Html.ValidationMessageFor(model => model.UNIQUEFLAG)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ISTREE)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ISTREE)
+            @Html.ValidationMessageFor(model => model.ISTREE)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SEQUENCE)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SEQUENCE)
+            @Html.ValidationMessageFor(model => model.SEQUENCE)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PARENTCODE)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PARENTCODE)
+            @Html.ValidationMessageFor(model => model.PARENTCODE)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

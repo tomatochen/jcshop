@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/">首页</a>
+        </li>
+        <li class="active">一级品类</li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            一级品类
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                将现有菜品信息分类保存到数据库
+            </small>
+        </h1>
+    </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <form role="form" class="form-horizontal" id="validation_xueli">
+                    <!-- #section:elements.form -->
+                    <div class="form-group">
+                        <label for="form-field-1" class="col-sm-1 control-label no-padding-right">名&nbsp;&nbsp;称</label>
+                        <div class="col-sm-2">
+                            <div class="clearfix">
+                                <input type="text" name="VEGETABLESNAME" id="VEGETABLESNAME" class="form-control">
+                            </div>
+                        </div>
+                        <label for="form-field-1" class="col-sm-1 control-label no-padding-right">排序号</label>
+                        <div class="col-sm-2">
+                            <div class="clearfix">
+                                <input type="text" name="SEQUENCE" id="SEQUENCE" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="clearfix">
+                                <input type="hidden" name="GUID" id="GUID" value="" class="form-control">
+                                <button type="button" class="btn btn-success btn-sm" name="btn_submitXueLi" onclick="submitXueLi(); return false;">
+                                    <i class="ace-icon fa fa-plus-circle bigger-125"></i>确定
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="clearfix form-actions">
+                            <div class="col-md-offset-5 col-md-7">
+                                <button type="reset" class="btn btn-info btn-sm" onclick="">
+                                    <i class="ace-icon fa fa-plus-circle bigger-125"></i>取消
+                                </button>
+
+                            </div>
+                        </div>*@
+                </form>
+            </div><!-- /.col -->
+        </div>
+        <div class="row">
+            <div id="list_xueli">
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    var v;
+    $(function () {
+        $('#a15').addClass("active open");
+        $('#a1501').addClass("active");
+        load_list_xueli();
+    })
+    function load_list_xueli() {
+        var url = '@Url.Action("List", "VegeParentType")';
+        $('#list_xueli').empty().load(url);
+    }
+    function submitXueLi() {
+        var data = get_form_data1('validation_xueli');
+        var url = '@Url.Action("Create", "VegeParentType")';
+        $.post(url, data, function (d) {
+            if (d.Success) {
+                debugger;
+                cglalert(d.Message, function () {
+                    debugger;
+                    resetForm("validation_xueli");
+                    load_list_xueli();
+                });
+            } else {
+                cglalert(d.Message);
+            }
+        });
+
+    }
+    function get_form_data1(t) {
+        var obj = {};
+        $('#' + t).find('[name]').each(function () {
+
+            var op = this.name;
+            if (this.type == 'radio') {
+                obj[op] = $(':input[name="' + op + '"]:checked').val();
+            } else {
+                obj[op] = this.value;
+            }
+        });
+        //obj.EDUCATIONFLAG = document.getElementById('EDUCATIONFLAG').checked ? "1" : "0";
+        return obj;
+    }
+</script>
+

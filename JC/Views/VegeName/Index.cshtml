@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/">首页</a>
+        </li>
+        <li class="active">菜品基础信息</li>
+    </ul><!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            菜品基础信息
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                将现有菜品信息分类保存到数据库
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 chaxunWaiDiv">
+            <a href="@Url.Action("Create", "VegeName")" class="btn btn-success btn-sm">
+                <i class="ace-icon fa fa-plus-circle bigger-125"></i>新增
+            </a>
+        </div>
+    </div>
+    <div class="space-4"></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table id="grid-table"></table>
+            <div id="grid-pager"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var grid_selector = "#grid-table";
+    var pager_selector = "#grid-pager";
+    function EditLink(id) {
+        var url = "@Url.Action("Create", "VegeName")" + '?id=' + id + '&operation=edit';
+        location.href = url;
+    }
+
+    function DetailLink(id) {
+        var url = "@Url.Action("Create", "VegeName")" + '?id=' + id;
+        location.href = url;
+    }
+
+    function DeleteByID(id) {
+        var url = '@Url.Action("Delete", "VegeName")';
+        $.confirm('确定要删除选中的记录！', function () {
+            $.get2(url, { id: id }, function (d) {
+                if (d.Success) {
+                    cglalert(d.Message, function () {
+                        refresh_grid();
+                    })
+                }
+            })
+        })
+
+    }
+    function refresh_grid() {
+        var curpagenum = $(grid_selector).jqGrid('getGridParam', 'page');//当前页码
+        $(grid_selector).jqGrid('setGridParam', { page: curpagenum, url: grid_url() }).trigger("reloadGrid");
+        var objrows = $(grid_selector).jqGrid('getRowData');//当前页一共有多少行(当前页实际显示了多少行记录)
+
+        if (objrows.length == 0) {
+            $(grid_selector).jqGrid('setGridParam', { page: curpagenum - 1 }).trigger("reloadGrid");
+        }
+    }
+    var grid_url = function () {
+        var url = '@Url.Action("List", "VegeName")'; //+ "?" + $('#query_from').serialize();
+        return url;
+    }
+    function InitGrid() {
+
+        $(grid_selector).jqGrid({
+            url: grid_url(),
+            datatype: 'json',
+            colModel: [
+                    { name: 'GUID', index: 'GUID', width: 100, sortable: false, hidden: true, key: true },
+                    { name: 'VEGETABLESNAME', index: 'VEGETABLESNAME', label: '菜品名称', width: 120, align: 'left' },
+                    { name: 'VEGETABLESDES', index: 'VEGETABLESDES', label: '菜品描述', width: 120, align: 'left' },
+                    { name: 'BIGUNIT', index: 'BIGUNIT', label: '大包装单位', width: 90, align: 'left' },
+                    { name: 'SMALLUNIT', index: 'SMALLUNIT', label: '小包装单位', width: 90, align: 'left' },
+                    { name: 'PACKRULE', index: 'PACKRULE', label: '分装量', width: 60, align: 'left' },
+                    { name: 'TYPENAME', index: 'TYPENAME', label: '所属种类', width: 80, align: 'left' },
+                    { name: 'SMALLIMAGEURL', index: 'SMALLIMAGEURL', label: '图片', width: 100, align: 'left' },
+                    { name: 'SEQUENCE', index: 'SEQUENCE', label: '排序号', width: 60, align: 'left' },
+                    {
+                        name: '', index: '', label: '操作', fixed: true, align: 'center',
+                        sorttype: "string",
+                        sortable: false,
+                        formatter: function (cellvalue, options, rowObject) {
+                            return '<div class=\"btn btn-xs btn-primary no-padding no-margin\" onclick=\"DetailLink(\'' + options.rowId + '\');\">详情</div> <div class=\"btn btn-xs btn-primary no-padding no-margin\" onclick=\"EditLink(\'' + options.rowId + '\');\">修改</div>  <div class=\"btn btn-xs btn-danger no-padding no-margin\" onclick=\"DeleteByID(\'' + options.rowId + '\');\">删除</div>';
+                        }
+                    }
+            ],
+            sortname: 'SEQUENCE',
+            multiselect: true,
+            editfunc: function (id, data) {
+                alert(id);
+            },
+            delfunc: function (id, data) {
+                alert(id);
+            },
+            height: "auto",//grid高度
+            rownumbers: true,
+            rowNum: 10,
+            rowList: [10, 15, 20],
+            sortorder: 'asc',
+            viewrecords: true,
+            pager: $(pager_selector),
+            autowidth: true,
+            loadComplete: function () {
+                var table = this;
+                setTimeout(function () {
+                    forjqgrid(table);
+                }, 0);
+            },
+            onSelectRow: function (rowid, status) {
+                //log(rowid);
+                //log(status);
+            }
+        });
+    }
+    $(function () {
+        $('#a15').addClass("active open");
+        $('#a1503').addClass("active");
+        $(window).on('resize.jqGrid', function () {
+            $(grid_selector).jqGrid('setGridWidth', $(".page-content").width());
+        })
+        InitGrid();
+        //$(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x": "hidden" });//去掉jqgrid的横向滚动条
+        $(document).one('ajaxloadstart.page', function (e) {
+            $(grid_selector).jqGrid('GridUnload');
+            $('.ui-jqdialog').remove();
+        });
+
+    })
+
+</script>

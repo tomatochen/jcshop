@@ -1,0 +1,50 @@
+﻿@model JC.Models.STOREINFO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>STOREINFO</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GUID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GUID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.STORENAME)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.STORENAME)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.STOREID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.STOREID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AREANAME)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AREANAME)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AREAID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AREAID)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
